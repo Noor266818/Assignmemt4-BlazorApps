@@ -22,7 +22,7 @@ body, body.light-fresh {
     --card-shadow: 0 15px 35px rgba(255, 101, 163, 0.06);
 }
 
-    /* ?? COSMIC DARK PALETTE */
+  
     body.dark-fresh {
         --bg-master: linear-gradient(135deg, #0a0616 0%, #0d1726 100%);
         --panel-card: #19172e;
