@@ -9,7 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // ?? CRITICAL DATABASE INJECTION INTERACTION
-// Yeh line appsettings.json se "DefaultConnection" string utha kar SQL Server service configure karti hai.
+
 builder.Services.AddDbContextFactory<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
