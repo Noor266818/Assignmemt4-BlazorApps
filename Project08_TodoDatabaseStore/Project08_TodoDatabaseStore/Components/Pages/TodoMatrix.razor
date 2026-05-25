@@ -1,0 +1,393 @@
+﻿@page "/todo-matrix"
+@namespace Project08_TodoDatabaseStore.Components.Pages
+@using Project08_TodoDatabaseStore.Models
+@using Project08_TodoDatabaseStore.Data
+@using Microsoft.EntityFrameworkCore
+@inject IDbContextFactory<AppDbContext> DbFactory
+
+@rendermode InteractiveServer
+
+<style>
+    .matrix-viewport-wrapper {
+        min-height: 90vh;
+        width: 100%;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: radial-gradient(circle at 20% 30%, #2e114d 0%, #0f0822 50%, #030114 100%) !important;
+        position: relative;
+        overflow: hidden;
+        border-radius: 16px;
+    }
+
+        .matrix-viewport-wrapper::before {
+            content: '';
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(255, 101, 163, 0.22) 0%, rgba(0,0,0,0) 70%);
+            top: -120px;
+            right: -60px;
+            z-index: 0;
+        }
+
+        .matrix-viewport-wrapper::after {
+            content: '';
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, rgba(0, 180, 216, 0.18) 0%, rgba(0,0,0,0) 70%);
+            bottom: -180px;
+            left: -120px;
+            z-index: 0;
+        }
+
+    .aesthetic-glass-card {
+        background: rgba(255, 255, 255, 0.06);
+        backdrop-filter: blur(30px) saturate(170%);
+        -webkit-backdrop-filter: blur(30px) saturate(170%);
+        border-radius: 30px;
+        padding: 40px;
+        width: 100%;
+        max-width: 720px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.45), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+        z-index: 1;
+        position: relative;
+    }
+
+    .badge-neon-terminal {
+        font-size: 0.72rem;
+        font-weight: 800;
+        color: #ff65a3;
+        background: rgba(255, 101, 163, 0.15);
+        padding: 7px 20px;
+        border-radius: 50px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 25px;
+        border: 1px solid rgba(255, 101, 163, 0.35);
+        box-shadow: 0 0 15px rgba(255, 101, 163, 0.2);
+    }
+
+    .cyber-input-box {
+        flex: 1;
+        padding: 15px 22px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        font-size: 1rem;
+        color: #ffffff;
+        outline: none;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.05);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+        .cyber-input-box:focus {
+            border-color: #ff65a3;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 101, 163, 0.3), inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+    .action-pill-btn {
+        color: #ffffff;
+        border: none;
+        padding: 0 24px;
+        border-radius: 16px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .btn-create {
+        background: linear-gradient(135deg, #ff65a3 0%, #ff8ea1 100%);
+        box-shadow: 0 4px 20px rgba(255, 101, 163, 0.4);
+    }
+
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(255, 101, 163, 0.6);
+        }
+
+    .btn-update {
+        background: linear-gradient(135deg, #4fd1c5 0%, #319795 100%);
+        box-shadow: 0 4px 15px rgba(79, 209, 197, 0.3);
+    }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 209, 197, 0.5);
+        }
+
+    .glass-node-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 20px;
+        border-radius: 18px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        margin-bottom: 14px;
+        transition: all 0.25s ease;
+    }
+
+    .row-pending {
+        background: rgba(255,255,255,0.02);
+        border-color: rgba(255,255,255,0.08);
+    }
+
+    .row-completed {
+        background: rgba(56, 161, 105, 0.1);
+        border-color: rgba(56, 161, 105, 0.35);
+    }
+
+    .txt-pending {
+        color: #ffffff;
+        text-decoration: none;
+        opacity: 1;
+    }
+
+    .txt-completed {
+        color: #81e6d9;
+        text-decoration: line-through;
+        opacity: 0.6;
+    }
+
+    .cyber-checkbox {
+        width: 22px;
+        height: 22px;
+        cursor: pointer;
+        accent-color: #38a169;
+    }
+
+    .control-action-button {
+        border: none;
+        padding: 6px 14px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        color: #ffffff;
+    }
+
+    .btn-row-edit {
+        background: rgba(79, 209, 197, 0.2);
+        border: 1px solid rgba(79, 209, 197, 0.4);
+    }
+
+        .btn-row-edit:hover {
+            background: #4fd1c5;
+            box-shadow: 0 0 10px rgba(79, 209, 197, 0.4);
+        }
+
+    .btn-row-delete {
+        background: rgba(229, 62, 62, 0.2);
+        border: 1px solid rgba(229, 62, 62, 0.4);
+    }
+
+        .btn-row-delete:hover {
+            background: #e53e3e;
+            box-shadow: 0 0 10px rgba(229, 62, 62, 0.4);
+        }
+</style>
+
+<div class="matrix-viewport-wrapper">
+    <div class="aesthetic-glass-card">
+
+        <div class="badge-neon-terminal">
+            <span class="spinner-grow spinner-grow-sm" style="width: 8px; height: 8px; color: #ff65a3;"></span>
+            DATABASE CRUD OPERATIONS ENGINE LINKED
+        </div>
+
+        <h2 style="margin: 0 0 6px 0; font-size: 2rem; font-weight: 800; color: #ffffff; letter-spacing: -0.5px;">
+            Live Task Matrix Cache
+        </h2>
+
+        <p style="margin: 0 0 35px 0; font-size: 0.95rem; color: rgba(255,255,255,0.6); line-height: 1.6;">
+            Add, update text states, or purge structural rows. Every action mutates records instantly inside your <strong style="color: #ff8ea1;">Local SSMS Database</strong>.
+        </p>
+
+        <div style="display: flex; gap: 14px; margin-bottom: 30px;">
+            <input type="text"
+                   class="cyber-input-box"
+                   placeholder="@(isEditMode ? "Modify task description sequence..." : "Enter new database stream task description...")"
+                   @bind="inputTaskTitle"
+                   @bind:event="oninput"
+                   @onkeyup="HandleKeyPress" />
+
+            @if (isEditMode)
+            {
+                <button type="button" class="action-pill-btn btn-update" @onclick="SaveChangesUpdateAsync">
+                    <span>💾</span> Save Edit
+                </button>
+                <button type="button" class="action-pill-btn" style="background: rgba(255,255,255,0.1);" @onclick="CancelEditMode">
+                    Cancel
+                </button>
+            }
+            else
+            {
+                <button type="button" class="action-pill-btn btn-create" @onclick="CreateTaskAsync">
+                    <span>➕</span> Add Task
+                </button>
+            }
+        </div>
+
+        <div style="max-height: 380px; overflow-y: auto; padding-right: 5px;">
+            @if (taskList == null)
+            {
+                <div style="text-align: center; padding: 30px; color: rgba(255,255,255,0.5); font-size: 1rem;">
+                    <div class="spinner-border text-light spinner-border-sm me-2"></div> Synchronizing with SQL Server Context...
+                </div>
+            }
+            else if (!taskList.Any())
+            {
+                <div style="padding: 50px 20px; border-radius: 20px; border: 2px dashed rgba(255,255,255,0.15); text-align: center; color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.01);">
+                    <span style="font-size: 2.5rem; display: block; margin-bottom: 15px;">🍃</span>
+                    Database table instances are currently empty. Push a new node stack execution trace above!
+                </div>
+            }
+            else
+            {
+                @foreach (var task in taskList)
+                {
+                    <div class="glass-node-row @(task.IsCompleted ? "row-completed" : "row-pending")">
+                        <div style="display: flex; align-items: center; gap: 16px; flex: 1;">
+                            <input type="checkbox"
+                                   class="cyber-checkbox"
+                                   checked="@task.IsCompleted"
+                                   @onchange="() => ToggleCompletionAsync(task)" />
+
+                            <span class="@(task.IsCompleted ? "txt-completed" : "txt-pending")" style="font-size: 1.05rem; font-weight: 500; transition: all 0.25s;">
+                                @task.Title
+                            </span>
+                        </div>
+
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" class="control-action-button btn-row-edit" title="Edit entry description" @onclick="() => SetupEditMode(task)">
+                                ✏️ Edit
+                            </button>
+
+                            <button type="button" class="control-action-button btn-row-delete" title="Purge row entry permanently" @onclick="() => DeleteTaskAsync(task.Id)">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</div>
+
+@code {
+    private List<TodoTask> taskList = new();
+    private string inputTaskTitle = string.Empty;
+
+    private bool isEditMode = false;
+    private int targetedEditingTaskId = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDatabaseTasksAsync();
+    }
+
+    private async Task LoadDatabaseTasksAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        taskList = await context.TodoTasks.OrderByDescending(t => t.CreatedAt).ToListAsync();
+    }
+
+    private async Task CreateTaskAsync()
+    {
+        if (string.IsNullOrWhiteSpace(inputTaskTitle)) return;
+
+        using var context = DbFactory.CreateDbContext();
+        var task = new TodoTask
+        {
+            Title = inputTaskTitle.Trim(),
+            IsCompleted = false,
+            CreatedAt = DateTime.Now
+        };
+
+        context.TodoTasks.Add(task);
+        await context.SaveChangesAsync();
+
+        inputTaskTitle = string.Empty;
+        await LoadDatabaseTasksAsync();
+        StateHasChanged();
+    }
+
+    private void SetupEditMode(TodoTask task)
+    {
+        isEditMode = true;
+        targetedEditingTaskId = task.Id;
+        inputTaskTitle = task.Title;
+    }
+
+    private async Task SaveChangesUpdateAsync()
+    {
+        if (string.IsNullOrWhiteSpace(inputTaskTitle) || targetedEditingTaskId == 0) return;
+
+        using var context = DbFactory.CreateDbContext();
+        var existingTask = await context.TodoTasks.FindAsync(targetedEditingTaskId);
+        if (existingTask != null)
+        {
+            existingTask.Title = inputTaskTitle.Trim();
+            await context.SaveChangesAsync();
+        }
+
+        CancelEditMode();
+        await LoadDatabaseTasksAsync();
+    }
+
+    private void CancelEditMode()
+    {
+        isEditMode = false;
+        targetedEditingTaskId = 0;
+        inputTaskTitle = string.Empty;
+    }
+
+    private async Task ToggleCompletionAsync(TodoTask task)
+    {
+        using var context = DbFactory.CreateDbContext();
+        var existingTask = await context.TodoTasks.FindAsync(task.Id);
+        if (existingTask != null)
+        {
+            existingTask.IsCompleted = !existingTask.IsCompleted;
+            await context.SaveChangesAsync();
+        }
+        await LoadDatabaseTasksAsync();
+    }
+
+    private async Task DeleteTaskAsync(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        var existingTask = await context.TodoTasks.FindAsync(id);
+        if (existingTask != null)
+        {
+            context.TodoTasks.Remove(existingTask);
+            await context.SaveChangesAsync();
+        }
+        await LoadDatabaseTasksAsync();
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            if (isEditMode) await SaveChangesUpdateAsync();
+            else await CreateTaskAsync();
+        }
+    }
+}S

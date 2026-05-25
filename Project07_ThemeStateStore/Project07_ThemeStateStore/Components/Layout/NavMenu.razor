@@ -1,0 +1,46 @@
+﻿@namespace Project07_ThemeStateStore.Components.Layout
+
+<div style="display: flex; flex-direction: column; gap: 35px; height: 100%;">
+
+    <div style="display: flex; align-items: center; gap: 12px; padding: 5px 8px;">
+        <div style="width: 10px; height: 10px; background: var(--candy-pink); border-radius: 50%; box-shadow: 0 0 12px var(--candy-pink);"></div>
+        <span style="font-size: 1.25rem; font-weight: 900; color: #ffffff; letter-spacing: 0.5px;">Project07_Engine</span>
+    </div>
+
+    <nav style="display: flex; flex-direction: column; gap: 10px;">
+        <NavLink class="sidebar-link" href="" Match="NavLinkMatch.All">
+            <span style="margin-right: 10px;">🏠</span> Terminal Home
+        </NavLink>
+
+        <NavLink class="sidebar-link" href="todo-matrix">
+            <span style="margin-right: 10px;">⚙️</span> Task Storage
+        </NavLink>
+    </nav>
+</div>
+
+<style>
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        padding: 14px 18px;
+        border-radius: 14px;
+        font-size: 0.92rem;
+        font-weight: 600;
+        color: var(--sidebar-text) !important;
+        text-decoration: none !important;
+        background: transparent;
+        transition: all 0.25s ease;
+    }
+
+        .sidebar-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff !important;
+        }
+
+        /* Active Router State Class Highlight */
+        .sidebar-link.active {
+            background: linear-gradient(135deg, var(--candy-pink), #ec4899) !important;
+            color: #ffffff !important;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.3);
+        }
+</style>

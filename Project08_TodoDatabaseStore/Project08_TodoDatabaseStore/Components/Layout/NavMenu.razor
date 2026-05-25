@@ -1,0 +1,35 @@
+﻿@namespace Project08_TodoDatabaseStore.Components.Layout
+
+<div class="top-row ps-3 navbar navbar-dark bg-dark" style="background-color: #1a202c !important; height: 3.5rem; display: flex; align-items: center;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="todo-matrix" style="font-weight: 800; font-size: 1.1rem; color: #fff; text-decoration: none;">
+             Todo Matrix 
+        </a>
+    </div>
+</div>
+
+<div class="nav-scrollable" style="background: #2d3748; min-height: calc(100vh - 3.5rem); padding-top: 20px;">
+    <nav class="flex-column" style="display: flex; flex-direction: column; list-style: none; padding-left: 0;">
+
+        <div class="nav-item px-3" style="padding: 0 1rem; margin-bottom: 8px;">
+            <NavLink class="nav-link" href="todo-matrix" Match="NavLinkMatch.All" style="display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.85); padding: 12px 16px; border-radius: 12px; text-decoration: none; transition: all 0.2s ease;">
+                <span style="font-size: 1.2rem;">⚙️</span>
+                <span style="font-weight: 600; font-size: 0.95rem; letter-spacing: 0.3px;">Live Task Matrix</span>
+            </NavLink>
+        </div>
+
+    </nav>
+</div>
+
+<style>
+    .nav-item .nav-link:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        color: #fff !important;
+    }
+
+    .nav-item .nav-link.active {
+        background: linear-gradient(135deg, #ff65a3 0%, #ff8ea1 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(255, 101, 163, 0.25);
+    }
+</style>

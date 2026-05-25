@@ -1,0 +1,142 @@
+﻿<div class="secure-sidebar-container">
+    <div class="brand-identity-block">
+        <div class="neon-shield-logo">
+            <span class="shield-glyph">⚡</span>
+        </div>
+        <div class="brand-text-holder">
+            <span class="main-title-string">STREAM.IO</span>
+            <span class="sub-title-string">DATA CORRELATION</span>
+        </div>
+    </div>
+
+    <div class="navigation-links-grid">
+        <span class="group-classification-lbl">PIPELINE MONITOR</span>
+
+        <a class="nav-control-item active" href="/">
+            <span class="status-marker-node"></span>
+            <span class="link-label-string">📋 Active Task Stream</span>
+        </a>
+    </div>
+
+    <div class="sidebar-system-footer">
+        <span class="system-version-lbl">MATRIX ENGINE v1.2.0</span>
+        <span class="environment-lbl">STABLE ENVIRONMENT</span>
+    </div>
+</div>
+
+<style>
+    .secure-sidebar-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        color: #f3f4f6;
+        justify-content: space-between;
+    }
+
+    .brand-identity-block {
+        padding: 30px 24px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        border-bottom: 1px solid #1e293b;
+        background: rgba(2, 6, 23, 0.4);
+    }
+
+    .neon-shield-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        background: rgba(244, 63, 94, 0.1);
+        border: 1px solid rgba(244, 63, 94, 0.3);
+        border-radius: 10px;
+        font-size: 1.1rem;
+    }
+
+    .brand-text-holder {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .main-title-string {
+        font-weight: 800;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+        color: #ffffff;
+    }
+
+    .sub-title-string {
+        font-size: 0.65rem;
+        font-weight: 600;
+        color: #64748b;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+    }
+
+    .navigation-links-grid {
+        padding: 32px 18px;
+        flex-grow: 1;
+    }
+
+    .group-classification-lbl {
+        display: block;
+        font-size: 0.68rem;
+        font-weight: 800;
+        color: #475569;
+        letter-spacing: 1.2px;
+        margin-bottom: 16px;
+        padding-left: 12px;
+    }
+
+    .nav-control-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 13px 16px;
+        border-radius: 10px;
+        color: #94a3b8;
+        text-decoration: none;
+        font-size: 0.88rem;
+        font-weight: 500;
+        border: 1px solid transparent;
+    }
+
+        .nav-control-item.active {
+            background: #0f172a;
+            color: #f43f5e;
+            font-weight: 600;
+            border: 1px solid #1e293b;
+        }
+
+    .status-marker-node {
+        width: 6px;
+        height: 6px;
+        background: #f43f5e;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #f43f5e;
+    }
+
+    .sidebar-system-footer {
+        padding: 24px;
+        border-top: 1px solid #1e293b;
+        background: rgba(2, 6, 23, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .system-version-lbl {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+    }
+
+    .environment-lbl {
+        font-size: 0.6rem;
+        font-weight: 600;
+        color: #64748b;
+    }
+</style>

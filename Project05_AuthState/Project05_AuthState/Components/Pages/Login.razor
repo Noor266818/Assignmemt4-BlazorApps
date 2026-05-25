@@ -1,0 +1,176 @@
+﻿@page "/"
+@page "/login"
+@using Project05_AuthState.Services
+@inject AuthenticationStateService AuthService
+@implements IDisposable
+@rendermode InteractiveServer
+
+<div class="auth-card-vibrant">
+    <div class="auth-header">
+        <div class="security-shield-glow">⚡</div>
+        <h3>Identity Access Terminal</h3>
+        <p class="auth-subtitle">Secure authentication state manager for shared global components.</p>
+    </div>
+
+    @if (!AuthService.IsAuthenticated)
+    {
+        <div class="input-group-panel">
+            <label>OPERATOR USERNAME</label>
+            <input type="text" @bind="inputUsername" placeholder="e.g. Ali Ahmed" class="auth-input-neon" />
+        </div>
+        <button class="auth-btn-gradient login-glow" @onclick="HandleLogin">Establish Session</button>
+    }
+    else
+    {
+        <div class="active-session-alert-glass">
+            <span class="pulse-ring-green"></span>
+            <p>Authorized Session Active: <strong>@AuthService.CurrentUser</strong></p>
+        </div>
+        <button class="auth-btn-danger" @onclick="HandleLogout">Terminate Session Token</button>
+    }
+</div>
+
+<style>
+    /* 🎨 Premium Space Gradient Background for the Card Content Only */
+    .auth-card-vibrant {
+        width: 100%;
+        max-width: 460px;
+        background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%);
+        border: 1px solid rgba(129, 140, 248, 0.2);
+        padding: 45px 40px;
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25), 0 0 30px rgba(99, 102, 241, 0.15);
+        text-align: center;
+        transition: all 0.4s ease;
+    }
+
+        /* Subtle neon aura hover effect on the card */
+        .auth-card-vibrant:hover {
+            border-color: rgba(217, 70, 239, 0.3);
+            box-shadow: 0 25px 50px rgba(15, 23, 42, 0.3), 0 0 40px rgba(217, 70, 239, 0.15);
+        }
+
+    .security-shield-glow {
+        font-size: 2.6rem;
+        margin-bottom: 18px;
+        filter: drop-shadow(0 0 12px #818cf8);
+        display: inline-block;
+    }
+
+    .auth-card-vibrant h3 {
+        color: #ffffff;
+        font-size: 1.45rem;
+        margin: 0 0 10px 0;
+        font-weight: 700;
+        letter-spacing: -0.3px;
+    }
+
+    .auth-subtitle {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin: 0 0 35px 0;
+        line-height: 1.5;
+    }
+
+    .input-group-panel {
+        text-align: left;
+        margin-bottom: 24px;
+    }
+
+        .input-group-panel label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: #a5b4fc;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+    /* Premium Sleek Dark Field inside the vibrant card */
+    .auth-input-neon {
+        width: 100%;
+        padding: 14px 18px;
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #ffffff;
+        font-size: 0.95rem;
+        outline: none;
+        box-sizing: border-box;
+        transition: all 0.3s ease;
+    }
+
+        .auth-input-neon:focus {
+            border-color: #818cf8;
+            background: rgba(15, 23, 42, 0.85);
+            box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.25);
+        }
+
+    /* Vibrant Multi-Color Button Gradient */
+    .auth-btn-gradient {
+        width: 100%;
+        padding: 14px;
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        background: linear-gradient(135deg, #4f46e5 0%, #a855f7 50%, #6366f1 100%);
+        color: #ffffff;
+        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        transition: all 0.3s ease;
+    }
+
+        .auth-btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.45);
+        }
+
+    .auth-btn-danger {
+        width: 100%;
+        padding: 14px;
+        font-weight: 700;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        background: #ef4444;
+        color: #ffffff;
+        transition: all 0.2s;
+    }
+
+        .auth-btn-danger:hover {
+            background: #dc2626;
+        }
+
+    /* Translucent Glass alert for successful state */
+    .active-session-alert-glass {
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        color: #34d399;
+        font-size: 0.9rem;
+    }
+
+    .pulse-ring-green {
+        width: 8px;
+        height: 8px;
+        background: #10b981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #10b981;
+    }
+</style>
+
+@code {
+    private string inputUsername = "";
+    private void HandleLogin() { AuthService.LogIn(inputUsername); inputUsername = ""; }
+    private void HandleLogout() => AuthService.LogOut();
+    protected override void OnInitialized() => AuthService.OnStateChanged += StateHasChanged;
+    public void Dispose() => AuthService.OnStateChanged -= StateHasChanged;
+}

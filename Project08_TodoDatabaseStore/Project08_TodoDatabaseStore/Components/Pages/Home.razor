@@ -1,0 +1,10 @@
+﻿@page "/"
+@inject NavigationManager NavManager
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Browser ko automatic real component engine par switch kar do
+        NavManager.NavigateTo("todo-matrix", true);
+    }
+}

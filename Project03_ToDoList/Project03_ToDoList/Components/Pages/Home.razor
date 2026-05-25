@@ -1,0 +1,293 @@
+﻿@page "/"
+@rendermode InteractiveServer
+
+<nav class="top-navbar">
+    <div class="nav-left">
+        <span class="nav-title">Task Stream Matrix</span>
+    </div>
+    <div class="nav-right">
+        <span class="status-indicator"><span class="pulse-dot"></span> Array Count: @todoNodes.Count</span>
+    </div>
+</nav>
+
+<div class="main-workspace">
+    <div class="aesthetic-card">
+        <div class="card-header">
+            <h3>Operational Stream Pipelines</h3>
+            <p>Two-way data binding captures user task inputs dynamically, while one-way rendering reflects live matrix data streams below.</p>
+        </div>
+
+        <div class="input-inline-group">
+            <input type="text" class="custom-input" @bind="taskInputBuffer" @bind:event="oninput" placeholder="Enter task token details..." />
+            <button class="action-btn add-btn" @onclick="PushElement" disabled="@string.IsNullOrWhiteSpace(taskInputBuffer)">Add Node</button>
+        </div>
+
+        <div class="list-viewport">
+            @if (!todoNodes.Any())
+            {
+                <div class="empty-state">
+                    <span class="empty-icon">∅</span>
+                    <p>No active processes registered inside stack parameters.</p>
+                </div>
+            }
+            else
+            {
+                @foreach (var specificNode in todoNodes)
+                {
+                    <div class="task-row-node">
+                        <div class="node-left">
+                            <span class="active-indicator-dot"></span>
+                            <span class="task-text-string">@specificNode</span>
+                        </div>
+                        <span class="node-tag">ACTIVE</span>
+                    </div>
+                }
+            }
+        </div>
+
+        @if (todoNodes.Any())
+        {
+            <button class="clear-all-btn" @onclick="ClearNodes">⚡ Clear All Tasks</button>
+        }
+    </div>
+</div>
+
+<style>
+    .top-navbar {
+        width: 100%;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #020617;
+        border-bottom: 1px solid #1e293b;
+    }
+
+    .nav-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+    }
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: #f43f5e;
+        background: rgba(244, 63, 94, 0.05);
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 1px solid rgba(244, 63, 94, 0.2);
+    }
+
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background: #f43f5e;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #f43f5e;
+    }
+
+    .main-workspace {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        flex-grow: 1;
+        padding: 5% 20px;
+    }
+
+    .aesthetic-card {
+        width: 100%;
+        max-width: 520px;
+        background: #020617;
+        border: 1px solid #1e293b;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    .card-header h3 {
+        margin: 0 0 6px 0;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .card-header p {
+        margin: 0 0 28px 0;
+        font-size: 0.85rem;
+        color: #475569;
+        line-height: 1.4;
+    }
+
+    .input-inline-group {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+    }
+
+    .custom-input {
+        flex-grow: 1;
+        padding: 13px 18px;
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+        .custom-input:focus {
+            border-color: #f43f5e;
+        }
+
+    .action-btn {
+        padding: 12px 24px;
+        font-weight: 600;
+        background: #f43f5e;
+        color: #ffffff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background 0.2s;
+        font-size: 0.9rem;
+    }
+
+        .action-btn:hover:not(:disabled) {
+            background: #e11d48;
+        }
+
+        .action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+    .list-viewport {
+        max-height: 260px;
+        overflow-y: auto;
+        margin-bottom: 24px;
+        padding-right: 4px;
+    }
+
+        .list-viewport::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .list-viewport::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+
+    .empty-state {
+        text-align: center;
+        padding: 36px 20px;
+        border: 1px dashed #1e293b;
+        border-radius: 12px;
+        color: #475569;
+        background: #0f172a;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .empty-icon {
+        font-size: 1.8rem;
+        color: #334155;
+    }
+
+    .empty-state p {
+        font-size: 0.85rem;
+        margin: 0;
+    }
+
+    .task-row-node {
+        background: #0f172a;
+        border: 1px solid #1e293b;
+        padding: 14px 18px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        animation: elementFadeIn 0.25s ease-out;
+    }
+
+    .node-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .active-indicator-dot {
+        width: 6px;
+        height: 6px;
+        background: #f43f5e;
+        border-radius: 50%;
+        box-shadow: 0 0 6px #f43f5e;
+    }
+
+    .task-text-string {
+        font-size: 0.92rem;
+        color: #e2e8f0;
+    }
+
+    .node-tag {
+        font-size: 0.65rem;
+        font-weight: 700;
+        color: #f43f5e;
+        background: rgba(244, 63, 94, 0.1);
+        padding: 3px 8px;
+        border-radius: 4px;
+        letter-spacing: 0.5px;
+    }
+
+    .clear-all-btn {
+        width: 100%;
+        padding: 13px;
+        background: transparent;
+        border: 1px solid #f43f5e;
+        border-radius: 10px;
+        color: #f43f5e;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+        .clear-all-btn:hover {
+            background: rgba(244, 63, 94, 0.05);
+        }
+
+    /* Keyframes syntax cleanly escaped using double @@ literal symbols */
+    @@keyframes elementFadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(4px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+@code {
+    private List<string> todoNodes { get; set; } = new();
+    private string taskInputBuffer { get; set; } = "";
+
+    private void PushElement()
+    {
+        if (!string.IsNullOrWhiteSpace(taskInputBuffer))
+        {
+            todoNodes.Add(taskInputBuffer.Trim());
+            taskInputBuffer = ""; // Flush the input element
+        }
+    }
+    private void ClearNodes() => todoNodes.Clear(); // Flush memory grid
+}

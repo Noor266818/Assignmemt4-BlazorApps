@@ -1,0 +1,62 @@
+﻿@namespace Project06_ConfigNotify.Components.Layout
+
+<div class="fresh-nav-wrapper">
+    <nav class="flex-column">
+
+        <div class="nav-item px-3">
+            <NavLink class="fresh-link" href="" Match="NavLinkMatch.All">
+                <span class="link-icon">🏠</span> Terminal Home
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="fresh-link" href="notifications/settings">
+                <span class="link-icon">⚙️</span> Feed Settings
+            </NavLink>
+        </div>
+
+        <div class="nav-item px-3">
+            <NavLink class="fresh-link" href="notifications/display">
+                <span class="link-icon">🔔</span> Live Feed Stream
+            </NavLink>
+        </div>
+
+    </nav>
+</div>
+
+<style>
+    .fresh-nav-wrapper {
+        padding: 0 15px;
+    }
+
+    .link-icon {
+        margin-right: 12px;
+        font-size: 1.1rem;
+    }
+
+    .fresh-link {
+        color: #a7f3d0 !important; /* Soft mint light text tint */
+        font-weight: 700;
+        font-size: 0.9rem;
+        padding: 14px 18px;
+        border-radius: 14px;
+        margin: 8px 0;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+        .fresh-link:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff !important;
+        }
+
+        /* Vibrant Candy Pink Active Navigation Button Highlight */
+        .fresh-link.active {
+            background: linear-gradient(135deg, var(--candy-pink, #ff65a3), #ec4899) !important;
+            color: #ffffff !important;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.4);
+            border: none;
+        }
+</style>

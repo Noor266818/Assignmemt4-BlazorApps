@@ -1,0 +1,117 @@
+﻿@page "/userprofile"
+@using Project05_AuthState.Services
+@inject AuthenticationStateService AuthService
+@implements IDisposable
+@rendermode InteractiveServer
+
+<div class="profile-page-container">
+    <div class="profile-clean-card">
+        @if (AuthService.IsAuthenticated)
+        {
+            <div class="authenticated-state">
+                <div class="avatar-badge">🔓</div>
+                <span class="access-tag status-success">ACCESS GRANTED</span>
+                <h2>Welcome Back, @AuthService.CurrentUser!</h2>
+                <p class="profile-meta">Global user session initialized securely. Your clearance level allows full component state synchronization.</p>
+                <div class="profile-footer-tag">Active State: Singleton Memory Cache</div>
+            </div>
+        }
+        else
+        {
+            <div class="anonymous-state">
+                <div class="avatar-badge">🔒</div>
+                <span class="access-tag status-error">RESTRICTED</span>
+                <h2>Authentication Required</h2>
+                <p class="profile-meta">No active user state found in memory. Please navigate to the Identity Terminal to log in.</p>
+                <a href="/login" class="redirect-btn">🔐 Go to Login Portal</a>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .profile-page-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 70vh;
+        font-family: system-ui, sans-serif;
+        background: #f8fafc;
+    }
+
+    .profile-clean-card {
+        width: 100%;
+        max-width: 460px;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+
+    .avatar-badge {
+        font-size: 3rem;
+        margin-bottom: 16px;
+    }
+
+    .access-tag {
+        font-size: 0.68rem;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 6px;
+        letter-spacing: 0.5px;
+    }
+
+    .status-success {
+        color: #16a34a;
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+    }
+
+    .status-error {
+        color: #dc2626;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+    }
+
+    .profile-clean-card h2 {
+        color: #0f172a;
+        font-size: 1.45rem;
+        font-weight: 700;
+        margin: 16px 0 8px 0;
+    }
+
+    .profile-meta {
+        color: #64748b;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin: 0 0 28px 0;
+    }
+
+    .profile-footer-tag {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #94a3b8;
+        border-top: 1px solid #f1f5f9;
+        padding-top: 16px;
+    }
+
+    .redirect-btn {
+        display: inline-block;
+        width: 100%;
+        padding: 14px;
+        background: #4f46e5;
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 700;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+</style>
+
+@code {
+    protected override void OnInitialized() => AuthService.OnStateChanged += StateHasChanged;
+    public void Dispose() => AuthService.OnStateChanged -= StateHasChanged;
+}

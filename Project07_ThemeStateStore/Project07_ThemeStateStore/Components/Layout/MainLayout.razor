@@ -1,0 +1,57 @@
+﻿@inherits LayoutComponentBase
+@namespace Project07_ThemeStateStore.Components.Layout
+@inject IJSRuntime JSRuntime
+
+<div style="display: flex; width: 100vw; height: 100vh;">
+
+    <aside style="width: 280px; background: var(--sidebar-bg); padding: 30px 20px; display: flex; flex-direction: column; border-right: 1px solid var(--border-line);">
+        <NavMenu />
+    </aside>
+
+    <main style="flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden;">
+        <header style="height: 70px; padding: 0 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-line);">
+            <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-sub); letter-spacing: 0.5px;">
+                WORKSPACE STATE / LOCALSTORAGE PERSISTENCE
+            </div>
+
+            <button class="theme-pill-btn" @onclick="ToggleThemeStateAsync">
+                @(isDarkMode ? "☀️ Switch to Light Mode" : "🌙 Switch to Dark Mode")
+            </button>
+        </header>
+
+        <div style="flex: 1; padding: 40px; overflow-y: auto; display: flex; justify-content: center; align-items: center;">
+            @Body
+        </div>
+    </main>
+</div>
+
+@code {
+    private bool isDarkMode = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var savedTheme = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "app-theme");
+            if (string.IsNullOrEmpty(savedTheme)) savedTheme = "light-fresh";
+
+            isDarkMode = (savedTheme == "dark-fresh");
+            await ApplyThemeClass(savedTheme);
+            StateHasChanged();
+        }
+    }
+
+    private async Task ToggleThemeStateAsync()
+    {
+        isDarkMode = !isDarkMode;
+        string activeTheme = isDarkMode ? "dark-fresh" : "light-fresh";
+
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "app-theme", activeTheme);
+        await ApplyThemeClass(activeTheme);
+    }
+
+    private async Task ApplyThemeClass(string themeName)
+    {
+        await JSRuntime.InvokeVoidAsync("eval", $"document.body.className = '{themeName}';");
+    }
+}

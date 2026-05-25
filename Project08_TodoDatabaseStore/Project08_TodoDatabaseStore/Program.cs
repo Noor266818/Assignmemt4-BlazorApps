@@ -1,0 +1,35 @@
+using Microsoft.EntityFrameworkCore;
+using Project08_TodoDatabaseStore.Components;
+using Project08_TodoDatabaseStore.Data; // ?? Connection Context namespace for DbContext
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
+
+// ?? CRITICAL DATABASE INJECTION INTERACTION
+// Yeh line appsettings.json se "DefaultConnection" string utha kar SQL Server service configure karti hai.
+builder.Services.AddDbContextFactory<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Error", createScopeForErrors: true);
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages: true);
+app.UseHttpsRedirection();
+
+app.UseAntiforgery();
+
+app.MapStaticAssets();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
+
+app.Run();

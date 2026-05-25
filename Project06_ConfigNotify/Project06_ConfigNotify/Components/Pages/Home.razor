@@ -1,0 +1,118 @@
+﻿@page "/"
+
+<div class="fresh-welcome-board">
+    <div class="pink-pill-badge">PIPELINE CORE RUNNING</div>
+    <h2>Identity Access & Configuration Terminal</h2>
+    <p class="board-subtext">The cross-cutting state configuration container and dynamic notification engine parameters are active.</p>
+
+    <div class="fresh-cards-grid">
+        <div class="fresh-card-node element-mint">
+            <div class="card-icon style-green">⚙️</div>
+            <h3>Config Module</h3>
+            <p>Singleton core memory stack initialized perfectly inside workspace handler.</p>
+        </div>
+
+        <div class="fresh-card-node element-pink">
+            <div class="card-icon style-pink">🔔</div>
+            <h3>Telemetry Feed</h3>
+            <p>Live asynchronous state distribution pipeline ready for stream updates.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fresh-welcome-board {
+        background: #ffffff;
+        border: 2px solid rgba(255, 101, 163, 0.1);
+        padding: 45px;
+        border-radius: 24px;
+        max-width: 720px;
+        width: 100%;
+        text-align: left;
+        box-shadow: 0 20px 40px rgba(148, 163, 184, 0.06);
+    }
+
+    .pink-pill-badge {
+        font-size: 0.65rem;
+        font-weight: 900;
+        color: var(--candy-pink, #ff65a3);
+        background: rgba(255, 101, 163, 0.08);
+        border: 1px solid rgba(255, 101, 163, 0.25);
+        padding: 5px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        letter-spacing: 0.8px;
+    }
+
+    .fresh-welcome-board h2 {
+        margin: 20px 0 10px 0;
+        font-size: 1.6rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .board-subtext {
+        margin: 0 0 35px 0;
+        font-size: 0.92rem;
+        color: #475569;
+        line-height: 1.6;
+    }
+
+    .fresh-cards-grid {
+        display: flex;
+        gap: 20px;
+    }
+
+    .fresh-card-node {
+        flex: 1;
+        padding: 24px;
+        border-radius: 16px;
+        border: 1px solid #f1f5f9;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .element-mint {
+        background: #f0fdf4;
+    }
+
+        .element-mint:hover {
+            border-color: var(--mint-green);
+            transform: translateY(-2px);
+        }
+
+    .element-pink {
+        background: #fff5f7;
+    }
+
+        .element-pink:hover {
+            border-color: var(--candy-pink);
+            transform: translateY(-2px);
+        }
+
+    .card-icon {
+        font-size: 1.4rem;
+        margin-bottom: 12px;
+    }
+
+    .fresh-card-node h3 {
+        margin: 0 0 6px 0;
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .fresh-card-node p {
+        margin: 0;
+        font-size: 0.82rem;
+        color: #64748b;
+        line-height: 1.5;
+    }
+
+    .style-green {
+        filter: drop-shadow(0 2px 4px rgba(5, 150, 105, 0.2));
+    }
+
+    .style-pink {
+        filter: drop-shadow(0 2px 4px rgba(255, 101, 163, 0.2));
+    }
+</style>

@@ -1,7 +1,230 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
-<PageTitle>Home</PageTitle>
+<nav class="top-navbar">
+    <div class="nav-left">
+        <span class="nav-title">Greeting Panel</span>
+    </div>
+    <div class="nav-right">
+        <span class="status-indicator">
+            <span class="pulse-dot"></span> Active Session
+        </span>
+    </div>
+</nav>
 
-<h1>Hello, world!</h1>
+<div class="main-workspace">
+    <div class="aesthetic-card">
+        <div class="card-header">
+            <h3>Personalized Greeting Studio</h3>
+            <p>Select your preferred greeting style and enter your name.</p>
+        </div>
 
-Welcome to your new app.
+        <div class="input-wrapper mb-4">
+            <label>GREETING TYPE</label>
+            <div class="select-field-container">
+                <select class="custom-select" @bind="selectedGreetingType">
+                    <option value="Welcome">Standard Welcome</option>
+                    <option value="Professional">Professional Salutation</option>
+                    <option value="Casual">Casual / Friendly</option>
+                    <option value="Inspirational">Inspirational Quote</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="input-wrapper">
+            <label>YOUR NAME</label>
+            <div class="input-field-container">
+                <input type="text" class="custom-input"
+                       @bind="userName"
+                       @bind:event="oninput"
+                       placeholder="Type your name here..." />
+            </div>
+        </div>
+
+        <div class="output-display-box @(string.IsNullOrWhiteSpace(userName) ? "" : "has-content")">
+            @if (!string.IsNullOrWhiteSpace(userName))
+            {
+                <div class="greeting-text">
+                    @GetGeneratedGreeting()
+                </div>
+            }
+            else
+            {
+                <div class="placeholder-text">
+                    Awaiting user inputs to render greeting...
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Top Navbar Styling */
+    .top-navbar {
+        width: 100%;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #0b0f19;
+        border-bottom: 1px solid #1f2937;
+    }
+
+    .nav-title {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+    }
+
+    .status-indicator {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.06);
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 1px solid rgba(16, 185, 129, 0.15);
+    }
+
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background: #10b981;
+        border-radius: 50%;
+    }
+
+    /* Main Workspace Layout */
+    .main-workspace {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        flex-grow: 1;
+        padding-top: 6%;
+    }
+
+    /* Premium Minimal Card */
+    .aesthetic-card {
+        width: 100%;
+        max-width: 500px;
+        background: #0b0f19;
+        border: 1px solid #1f2937;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .card-header h3 {
+        margin: 0 0 6px 0;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .card-header p {
+        margin: 0 0 32px 0;
+        font-size: 0.85rem;
+        color: #6b7280;
+    }
+
+    /* Inputs Styling */
+    .input-wrapper {
+        margin-bottom: 20px;
+    }
+
+        .input-wrapper label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+    .custom-input, .custom-select {
+        width: 100%;
+        padding: 14px 16px;
+        background: #111827;
+        border: 1px solid #374151;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 0.95rem;
+        outline: none;
+        transition: all 0.2s;
+    }
+
+        .custom-input:focus, .custom-select:focus {
+            border-color: #10b981;
+            background: #0b0f19;
+        }
+
+    /* Dropdown Arrow Fix for Dark Theme */
+    .custom-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        background-size: 16px;
+        padding-right: 40px;
+        cursor: pointer;
+    }
+
+    /* Output Box */
+    .output-display-box {
+        margin-top: 28px;
+        padding: 24px;
+        background: #111827;
+        border: 1px dashed #374151;
+        border-radius: 12px;
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .output-display-box.has-content {
+            background: rgba(16, 185, 129, 0.02);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+    .placeholder-text {
+        color: #4b5563;
+        font-size: 0.85rem;
+    }
+
+    .greeting-text {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #e5e7eb;
+        text-align: center;
+        line-height: 1.6;
+    }
+
+    .highlight {
+        color: #10b981;
+        font-weight: 700;
+    }
+</style>
+
+@code {
+    private string userName { get; set; } = "";
+    private string selectedGreetingType { get; set; } = "Welcome";
+
+    private MarkupString GetGeneratedGreeting()
+    {
+        if (string.IsNullOrWhiteSpace(userName)) return (MarkupString)"";
+
+        string message = selectedGreetingType switch
+        {
+            "Professional" => $"Dear <span class='highlight'>{userName}</span>, we sincerely appreciate your presence and wish you an exceptionally productive session ahead.",
+            "Casual" => $"Hey <span class='highlight'>{userName}</span>! What's up? Awesome to see you dropping by today! 🙌",
+            "Inspirational" => $"Believe you can and you're halfway there, <span class='highlight'>{userName}</span>. Keep pushing forward!",
+            _ => $"Welcome back, <span class='highlight'>{userName}</span>. It's truly great to have you here in the workspace."
+        };
+
+        return (MarkupString)message;
+    }
+}

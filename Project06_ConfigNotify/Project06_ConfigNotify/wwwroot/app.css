@@ -1,0 +1,159 @@
+﻿
+:root {
+    /* Vibrant Fresh Color Wheel */
+    --fresh-bg: linear-gradient(135deg, #fff5f7 0%, #e6fffa 100%); /* Pink to Mint Soft Gradient Background */
+    --panel-white: rgba(255, 255, 255, 0.85);
+    --candy-pink: #ff65a3; /* Bright Pop Pink */
+    --mint-green: #059669; /* Deep Vibrant Mint Green for Text */
+    --light-mint: #d1fae5; /* Soft Light Green Pill Background */
+    --neon-cyan: #06b6d4; /* Electric Blue-Cyan Accent */
+
+    --text-dark: #1e293b; /* Deep Charcoal Text */
+    --text-muted: #64748b; /* Cool Slate Subtitles */
+    --border-smooth: rgba(255, 101, 163, 0.15);
+}
+
+/* Base Body Application Overrides */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background: var(--fresh-bg) !important;
+    color: var(--text-dark);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Master Colorful Shell Grid layout */
+.fresh-master-root {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+/* Immersive Clean Window Container Frame */
+.fresh-console-frame {
+    width: 100%;
+    height: 100%;
+    background: var(--panel-white);
+    border: 2px solid rgba(5, 150, 105, 0.2);
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(165, 180, 252, 0.15), 0 4px 12px rgba(255, 101, 163, 0.05);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+}
+
+/* Beautiful Pink/Green Tinted Header Ribbon */
+.fresh-header {
+    height: 5rem;
+    padding: 0 2.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-bottom: 2px solid rgba(255, 101, 163, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.glowing-core-dot {
+    width: 12px;
+    height: 12px;
+    background: linear-gradient(135deg, var(--candy-pink), var(--neon-cyan));
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--candy-pink);
+}
+
+.brand-wrapper h1 {
+    font-size: 1.3rem;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: 0.3px;
+    background: linear-gradient(to right, var(--text-dark), var(--candy-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fresh-status-tag {
+    font-size: 0.72rem;
+    font-weight: 800;
+    color: var(--mint-green);
+    background: var(--light-mint);
+    padding: 5px 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(5, 150, 105, 0.2);
+}
+
+/* Right Control Layout actions */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cyber-ssl-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--neon-cyan);
+    background: rgba(6, 182, 212, 0.06);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+    padding: 6px 14px;
+    border-radius: 10px;
+}
+
+.palette-toggle-btn {
+    background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+    border: 1px solid rgba(255, 101, 163, 0.3);
+    color: var(--candy-pink);
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .palette-toggle-btn:hover {
+        transform: scale(1.03);
+        background: var(--candy-pink);
+        color: white;
+    }
+
+/* Master Structural Workspace Splitter */
+.fresh-workspace {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Left Sidebar - Deep Mint Contrast */
+.fresh-sidebar {
+    width: 270px;
+    background-color: #064e3b; /* Gorgeous rich deep emerald for extreme premium setup contrast */
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+}
+
+/* Operational Main Viewport */
+.fresh-viewport {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem;
+    overflow-y: auto;
+    background: radial-gradient(circle at center, rgba(230, 255, 250, 0.5), transparent);
+}

@@ -1,0 +1,79 @@
+/* ==========================================================================
+   ?? DYNAMIC INFRASTRUCTURE LAYOUT - PROJECT 07 SOLID OVERHAUL ??
+   ========================================================================== */
+
+:root {
+    --transition-speed: 0.3s ease-in-out;
+}
+
+/* ?? FRESH LIGHT PALETTE */
+body, body.light-fresh {
+    --bg-master: linear-gradient(135deg, #fff2f5 0%, #e8fffb 100%);
+    --panel-card: #ffffff;
+    --sidebar-bg: #121026;
+    --sidebar-text: #cbd5e1;
+    --text-main: #0f172a;
+    --text-sub: #475569;
+    --candy-pink: #ff65a3;
+    --border-line: rgba(255, 101, 163, 0.15);
+    /* Elegant Solid Background Shades for Interior Cards */
+    --inner-mint-bg: #e6fcf5;
+    --inner-pink-bg: #fff0f3;
+    --card-shadow: 0 15px 35px rgba(255, 101, 163, 0.06);
+}
+
+    /* ?? COSMIC DARK PALETTE */
+    body.dark-fresh {
+        --bg-master: linear-gradient(135deg, #0a0616 0%, #0d1726 100%);
+        --panel-card: #19172e;
+        --sidebar-bg: #05030c;
+        --sidebar-text: #94a3b8;
+        --text-main: #f8fafc;
+        --text-sub: #94a3b8;
+        --candy-pink: #f43f5e;
+        --border-line: rgba(244, 63, 94, 0.25);
+        /* Elegant Dark Solid Background Shades for Interior Cards */
+        --inner-mint-bg: rgba(52, 211, 153, 0.08);
+        --inner-pink-bg: rgba(244, 63, 94, 0.1);
+        --card-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
+    }
+
+body, html {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    background: var(--bg-master) !important;
+    color: var(--text-main);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    transition: background var(--transition-speed), color var(--transition-speed);
+    overflow: hidden;
+}
+
+.aesthetic-card-frame {
+    background: var(--panel-card) !important;
+    border: 1px solid var(--border-line) !important;
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 680px;
+    box-shadow: var(--card-shadow);
+    transition: background var(--transition-speed), border-color var(--transition-speed);
+}
+
+.theme-pill-btn {
+    background: linear-gradient(135deg, #ff65a3, #ec4899) !important;
+    color: white !important;
+    border: none !important;
+    padding: 11px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(236, 72, 153, 0.3);
+    transition: transform 0.2s;
+}
+
+    .theme-pill-btn:hover {
+        transform: translateY(-2px);
+    }

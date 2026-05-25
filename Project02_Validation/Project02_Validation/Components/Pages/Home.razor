@@ -1,0 +1,265 @@
+﻿@page "/"
+@using System.ComponentModel.DataAnnotations
+@rendermode InteractiveServer
+
+<nav class="top-navbar-node">
+    <div class="nav-left-context">
+        <span class="nav-title-text">Identity Node Control</span>
+    </div>
+    <div class="nav-right-context">
+        <span class="status-indicator-badge"><span class="pulse-dot-element"></span> Secure SSL Connection</span>
+    </div>
+</nav>
+
+<div class="main-workspace-container">
+    <div class="aesthetic-form-card">
+        <div class="card-header-block">
+            <h3>User Registration Profile</h3>
+            <p>Ensure fields comply directly with model schema validation syntax before pushing changes.</p>
+        </div>
+
+        <EditForm Model="@formModel" OnValidSubmit="ValidPass" OnInvalidSubmit="ValidFail">
+            <DataAnnotationsValidator />
+
+            <div class="input-form-wrapper">
+                <label>FIRST NAME</label>
+                <InputText class="custom-input-field" @bind-Value="formModel.FirstName" placeholder="Enter first name..." />
+                <div class="error-msg-container"><ValidationMessage For="@(() => formModel.FirstName)" /></div>
+            </div>
+
+            <div class="input-form-wrapper">
+                <label>LAST NAME</label>
+                <InputText class="custom-input-field" @bind-Value="formModel.LastName" placeholder="Enter last name..." />
+                <div class="error-msg-container"><ValidationMessage For="@(() => formModel.LastName)" /></div>
+            </div>
+
+            <div class="input-form-wrapper">
+                <label>EMAIL ADDRESS</label>
+                <InputText class="custom-input-field" @bind-Value="formModel.Email" placeholder="username@domain.com" />
+                <div class="error-msg-container"><ValidationMessage For="@(() => formModel.Email)" /></div>
+            </div>
+
+            <button type="submit" class="premium-submit-btn">Verify & Register Profile</button>
+        </EditForm>
+
+        @if (successBanner)
+        {
+            <div class="success-alert-panel">
+                <span class="alert-glyph-icon">✓</span>
+                <div class="alert-content-text">
+                    <strong>Validation Passed!</strong>
+                    <span>Profile structure loaded and appended safely inside standard system memory parameters.</span>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .top-navbar-node {
+        width: 100%;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #062f4f;
+        border-bottom: 1px solid #114b7a;
+    }
+
+    .nav-title-text {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #ffffff;
+        letter-spacing: 0.5px;
+    }
+
+    .status-indicator-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        color: #10b981;
+        background: rgba(16, 185, 129, 0.08);
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .pulse-dot-element {
+        width: 6px;
+        height: 6px;
+        background: #10b981;
+        border-radius: 50%;
+        box-shadow: 0 0 8px #10b981;
+        animation: activePulse 2s infinite;
+    }
+
+    .main-workspace-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+        flex-grow: 1;
+        padding: 5% 20px;
+    }
+
+    .aesthetic-form-card {
+        width: 100%;
+        max-width: 480px;
+        background: #062f4f;
+        border: 1px solid #114b7a;
+        border-radius: 16px;
+        padding: 40px;
+        box-shadow: 0 20px 45px rgba(0,0,0,0.35);
+    }
+
+    .card-header-block h3 {
+        margin: 0 0 6px 0;
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: #ffffff;
+    }
+
+    .card-header-block p {
+        margin: 0 0 32px 0;
+        font-size: 0.85rem;
+        color: #81a4cd;
+        line-height: 1.4;
+    }
+
+    .input-form-wrapper {
+        margin-bottom: 22px;
+        position: relative;
+    }
+
+        .input-form-wrapper label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: 1.2px;
+            margin-bottom: 8px;
+        }
+
+    .custom-input-field {
+        width: 100%;
+        padding: 13px 18px;
+        background: #0b3c5d;
+        border: 1px solid #114b7a;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 0.95rem;
+        outline: none;
+        transition: all 0.25s ease;
+    }
+
+        .custom-input-field:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            background: #0c446a;
+        }
+
+    .error-msg-container {
+        font-size: 0.78rem;
+        color: #f87171;
+        margin-top: 6px;
+        font-weight: 500;
+    }
+
+    .premium-submit-btn {
+        width: 100%;
+        padding: 14px;
+        background: #10b981;
+        border: none;
+        border-radius: 10px;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-top: 10px;
+        box-shadow: 0 4px 12px rgba(16,185,129,0.25);
+    }
+
+        .premium-submit-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+
+    .success-alert-panel {
+        margin-top: 26px;
+        padding: 16px 20px;
+        background: rgba(16, 185, 129, 0.08);
+        border: 1px solid #10b981;
+        border-radius: 12px;
+        color: #34d399;
+        display: flex;
+        gap: 14px;
+        align-items: flex-start;
+        animation: elementSlideUp 0.3s ease-out;
+    }
+
+    .alert-glyph-icon {
+        font-size: 1.1rem;
+        background: rgba(16, 185, 129, 0.18);
+        padding: 2px 8px;
+        border-radius: 50%;
+        font-weight: bold;
+    }
+
+    .alert-content-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        font-size: 0.88rem;
+    }
+
+        .alert-content-text strong {
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+    /* Fixed validation errors using double @@ escaping */
+    @@keyframes activePulse {
+        0%, 100% {
+            opacity: 0.4;
+        }
+
+        50% {
+            opacity: 1;
+        }
+    }
+
+    @@keyframes elementSlideUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+
+@code {
+    private ModelData formModel { get; set; } = new();
+    private bool successBanner { get; set; } = false;
+
+    private void ValidPass() => successBanner = true;
+    private void ValidFail() => successBanner = false;
+
+    public class ModelData
+    {
+        [Required(ErrorMessage = "First name field string sequence is required.")]
+        public string FirstName { get; set; } = "";
+
+        [Required(ErrorMessage = "Last name field string sequence is required.")]
+        public string LastName { get; set; } = "";
+
+        [Required(ErrorMessage = "System routing configuration email parameter is missing.")]
+        [EmailAddress(ErrorMessage = "Input mismatch: Does not map valid email routing topology patterns.")]
+        public string Email { get; set; } = "";
+    }
+}

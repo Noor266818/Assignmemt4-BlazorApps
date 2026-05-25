@@ -1,0 +1,149 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main>
+        <header class="top-bar-panel">
+            <div class="system-breadcrumbs">
+                <span class="root-node">Root Node</span>
+                <span class="node-arrow">/</span>
+                <span class="active-node">Live Production Environment</span>
+            </div>
+            <div class="server-badge">
+                <span class="pulse-dot"></span>
+                <span class="badge-lbl">NODE-01 ACTIVE</span>
+            </div>
+        </header>
+
+        <article class="content-viewport">
+            @Body
+        </article>
+    </main>
+</div>
+
+<style>
+    :root {
+        --bg-main: #f8fafc;
+        --border-color: #e2e8f0;
+        --text-muted: #64748b;
+    }
+
+    /* Overall Layout Structure */
+    .page {
+        display: flex;
+        background-color: var(--bg-main);
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .sidebar {
+        width: 290px;
+        background: #ffffff;
+        border-right: 1px solid var(--border-color);
+        flex-shrink: 0;
+    }
+
+    main {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    /* Premium Top Header Panel */
+    .top-bar-panel {
+        background: #ffffff;
+        border-bottom: 1px solid var(--border-color);
+        height: 3.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 2rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+    }
+
+    .system-breadcrumbs {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.82rem;
+        font-weight: 500;
+    }
+
+    .root-node {
+        color: var(--text-muted);
+    }
+
+    .node-arrow {
+        color: #cbd5e1;
+    }
+
+    .active-node {
+        color: #0f172a;
+        font-weight: 600;
+    }
+
+    .server-badge {
+        background: #f0fdf4;
+        border: 1px solid #bbf7d0;
+        padding: 6px 12px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .pulse-dot {
+        width: 6px;
+        height: 6px;
+        background: #10b981;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .badge-lbl {
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: #16a34a;
+        letter-spacing: 0.5px;
+    }
+
+    /* Content Area Frame */
+    .content-viewport {
+        padding: 2rem;
+        flex-grow: 1;
+        overflow-y: auto;
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    /* Clean Aesthetics for Global Elements */
+    body {
+        background-color: var(--bg-main) !important;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Sleek Modern Scrollbar Layout */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 10px;
+    }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+</style>

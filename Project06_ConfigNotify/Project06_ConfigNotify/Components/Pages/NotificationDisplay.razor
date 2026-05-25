@@ -1,0 +1,129 @@
+﻿@page "/notifications/display"
+
+<div class="fresh-display-card">
+    <div class="mint-pill-badge">🟢 LIVE TELEMETRY LOGS</div>
+    <h2>Console Feed Stream</h2>
+    <p class="board-subtext">Real-time status updates broadcasted via internal scoped events dispatcher.</p>
+
+    <div class="vibrant-stream-stack">
+        <div class="stream-item-card status-mint">
+            <div class="stream-header-row">
+                <span class="stream-indicator">● Security Token Refreshed</span>
+                <span class="stream-time">Just now</span>
+            </div>
+            <p class="stream-body-text">SSL authentication tunnel renegotiated successfully with remote service core.</p>
+        </div>
+
+        <div class="stream-item-card status-cyan">
+            <div class="stream-header-row">
+                <span class="stream-indicator">● Config Instance Sync</span>
+                <span class="stream-time">4 mins ago</span>
+            </div>
+            <p class="stream-body-text">NotificationStyle state synchronized across active pipeline page nodes.</p>
+        </div>
+
+        <div class="stream-item-card status-pink">
+            <div class="stream-header-row">
+                <span class="stream-indicator">● Memory Usage Warning</span>
+                <span class="stream-time">15 mins ago</span>
+            </div>
+            <p class="stream-body-text">Scoped lifecycle context reached 78% of resource threshold allocation.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .fresh-display-card {
+        background: #ffffff;
+        border: 2px solid rgba(5, 150, 105, 0.1);
+        padding: 45px;
+        border-radius: 24px;
+        max-width: 750px;
+        width: 100%;
+        text-align: left;
+        box-shadow: 0 20px 40px rgba(148, 163, 184, 0.06);
+    }
+
+    .mint-pill-badge {
+        font-size: 0.65rem;
+        font-weight: 900;
+        color: var(--mint-green, #059669);
+        background: var(--light-mint, #d1fae5);
+        border: 1px solid rgba(5, 150, 105, 0.25);
+        padding: 5px 12px;
+        border-radius: 6px;
+        display: inline-block;
+        letter-spacing: 0.8px;
+    }
+
+    .vibrant-stream-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 30px;
+    }
+
+    .stream-item-card {
+        padding: 20px;
+        border-radius: 16px;
+        border-left: 5px solid transparent;
+        background: #f8fafc;
+        transition: transform 0.2s;
+    }
+
+        .stream-item-card:hover {
+            transform: translateX(4px);
+        }
+
+    /* Colourful State Left-Borders and Highlights */
+    .status-mint {
+        border-left-color: var(--mint-green, #059669);
+        background: #f0fdf4;
+    }
+
+        .status-mint .stream-indicator {
+            color: var(--mint-green, #059669);
+            font-weight: 700;
+        }
+
+    .status-cyan {
+        border-left-color: var(--neon-cyan, #06b6d4);
+        background: #ecfdf5;
+    }
+
+        .status-cyan .stream-indicator {
+            color: var(--neon-cyan, #06b6d4);
+            font-weight: 700;
+        }
+
+    .status-pink {
+        border-left-color: var(--candy-pink, #ff65a3);
+        background: #fff5f7;
+    }
+
+        .status-pink .stream-indicator {
+            color: var(--candy-pink, #ff65a3);
+            font-weight: 700;
+        }
+
+    .stream-header-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+    }
+
+    .stream-time {
+        font-size: 0.78rem;
+        color: #94a3b8;
+        font-weight: 600;
+    }
+
+    .stream-body-text {
+        margin: 0;
+        font-size: 0.85rem;
+        color: #475569;
+        line-height: 1.5;
+    }
+</style>
