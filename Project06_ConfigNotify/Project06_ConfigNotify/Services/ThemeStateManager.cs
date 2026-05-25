@@ -27,7 +27,7 @@ namespace Project06_ConfigNotify.Services
             }
             catch
             {
-                CurrentThemeClass = "app-light-theme"; // Pre-rendering guard fallback
+                CurrentThemeClass = "app-light-theme"; 
             }
         }
 
