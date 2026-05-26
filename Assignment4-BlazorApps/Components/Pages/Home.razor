@@ -66,8 +66,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #0b0f19;
-        border-bottom: 1px solid #1f2937;
+        background: #170b14;
+        border-bottom: 1px solid #37142c;
     }
 
     .nav-title {
@@ -82,18 +82,39 @@
         gap: 8px;
         font-size: 0.75rem;
         font-weight: 500;
-        color: #10b981;
-        background: rgba(16, 185, 129, 0.06);
+        color: #f43f5e; /* Hot Pink */
+        background: rgba(244, 63, 94, 0.08);
         padding: 6px 14px;
         border-radius: 20px;
-        border: 1px solid rgba(16, 185, 129, 0.15);
+        border: 1px solid rgba(244, 63, 94, 0.25);
+        box-shadow: 0 0 10px rgba(244, 63, 94, 0.1);
     }
 
     .pulse-dot {
         width: 6px;
         height: 6px;
-        background: #10b981;
+        background: #f43f5e;
         border-radius: 50%;
+        box-shadow: 0 0 8px #f43f5e;
+        animation: pulseAnimation 2s infinite;
+    }
+
+    @@keyframes pulseAnimation {
+        0% {
+            transform: scale(0.9);
+            opacity: 0.6;
+        }
+
+        50% {
+            transform: scale(1.2);
+            opacity: 1;
+            box-shadow: 0 0 12px #f43f5e;
+        }
+
+        100% {
+            transform: scale(0.9);
+            opacity: 0.6;
+        }
     }
 
     /* Main Workspace Layout */
@@ -110,11 +131,11 @@
     .aesthetic-card {
         width: 100%;
         max-width: 500px;
-        background: #0b0f19;
-        border: 1px solid #1f2937;
+        background: #170b14;
+        border: 1px solid #3c1231;
         border-radius: 16px;
         padding: 40px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 63, 94, 0.05);
     }
 
     .card-header h3 {
@@ -127,7 +148,7 @@
     .card-header p {
         margin: 0 0 32px 0;
         font-size: 0.85rem;
-        color: #6b7280;
+        color: #a27b96; /* Dust Pink Muted Text */
     }
 
     /* Inputs Styling */
@@ -139,7 +160,7 @@
             display: block;
             font-size: 0.7rem;
             font-weight: 700;
-            color: #9ca3af;
+            color: #f472b6; /* Light Pink Labels */
             letter-spacing: 1px;
             margin-bottom: 8px;
         }
@@ -147,8 +168,8 @@
     .custom-input, .custom-select {
         width: 100%;
         padding: 14px 16px;
-        background: #111827;
-        border: 1px solid #374151;
+        background: #250f20;
+        border: 1px solid #50133e;
         border-radius: 10px;
         color: #ffffff;
         font-size: 0.95rem;
@@ -157,14 +178,15 @@
     }
 
         .custom-input:focus, .custom-select:focus {
-            border-color: #10b981;
-            background: #0b0f19;
+            border-color: #f43f5e; /* Hot pink glow focus */
+            background: #1d0919;
+            box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
         }
 
-    /* Dropdown Arrow Fix for Dark Theme */
+    /* Dropdown Arrow Fix for Pink/Dark Theme */
     .custom-select {
         appearance: none;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23f472b6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
         background-repeat: no-repeat;
         background-position: right 16px center;
         background-size: 16px;
@@ -176,36 +198,41 @@
     .output-display-box {
         margin-top: 28px;
         padding: 24px;
-        background: #111827;
-        border: 1px dashed #374151;
+        background: #250f20;
+        border: 1px dashed #50133e;
         border-radius: 12px;
         min-height: 100px;
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: all 0.3s ease;
     }
 
         .output-display-box.has-content {
-            background: rgba(16, 185, 129, 0.02);
-            border: 1px solid rgba(16, 185, 129, 0.2);
+            background: rgba(244, 63, 94, 0.03);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+            box-shadow: 0 0 15px rgba(244, 63, 94, 0.1);
         }
 
     .placeholder-text {
-        color: #4b5563;
+        color: #7c446c;
         font-size: 0.85rem;
     }
 
     .greeting-text {
         font-size: 1.05rem;
         font-weight: 600;
-        color: #e5e7eb;
+        color: #fce7f3;
         text-align: center;
         line-height: 1.6;
     }
 
+    /* Magic Target Highlight Styling */
     .highlight {
-        color: #10b981;
+        color: #ffffff;
         font-weight: 700;
+        text-shadow: 0 0 8px #f43f5e, 0 0 20px #f43f5e;
+        padding: 0 4px;
     }
 </style>
 
@@ -220,7 +247,7 @@
         string message = selectedGreetingType switch
         {
             "Professional" => $"Dear <span class='highlight'>{userName}</span>, we sincerely appreciate your presence and wish you an exceptionally productive session ahead.",
-            "Casual" => $"Hey <span class='highlight'>{userName}</span>! What's up? Awesome to see you dropping by today! 🙌",
+            "Casual" => $"Hey <span class='highlight'>{userName}</span>! What's up? Awesome to see you dropping by today! 💖🍿",
             "Inspirational" => $"Believe you can and you're halfway there, <span class='highlight'>{userName}</span>. Keep pushing forward!",
             _ => $"Welcome back, <span class='highlight'>{userName}</span>. It's truly great to have you here in the workspace."
         };
