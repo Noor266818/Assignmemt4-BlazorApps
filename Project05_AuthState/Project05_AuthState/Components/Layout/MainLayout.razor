@@ -1,126 +1,42 @@
 ﻿@inherits LayoutComponentBase
+@using Project05_AuthState.Services
+@inject AuthenticationStateService AuthService
+@implements IDisposable
 
 <div class="page">
-    <div class="sidebar">
+    <div class="sidebar" style="background: linear-gradient(180deg, #14162e, #0d0e1f) !important;">
         <NavMenu />
     </div>
 
-    <main class="main-workspace">
-        <header class="top-bar-panel">
-            <div class="system-breadcrumbs">
-                <span class="root-node">SYSTEM CORE</span>
-                <span class="node-arrow">/</span>
-                <span class="active-node">CONSOLE INTERFACE</span>
+    <main style="background-color: #f1f5f9 !important;">
+        <div class="top-row px-4" style="background-color: #ffffff !important; border-bottom: 1px solid #e2e8f0;">
+            <div style="font-size: 0.8rem; font-weight: 700;">
+                <span style="color: #94a3b8;">SYSTEM CORE</span> / <span style="color: #334155;">CONSOLE INTERFACE 💻</span>
             </div>
-            <div class="server-badge">
-                <span class="pulse-dot"></span>
-                <span class="badge-lbl">CONNECTED</span>
+            <div style="background-color: #f0fdf4; border: 1px solid #bbf7d0; color: #16a34a; padding: 0.3rem 0.9rem; border-radius: 30px; font-size: 0.75rem; font-weight: 700;">
+                CONNECTED
             </div>
-        </header>
+        </div>
 
-        <article class="content-viewport">
+        <article class="content px-4" style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 56px); padding: 2rem;">
             @Body
         </article>
     </main>
 </div>
 
-<style>
-    :root {
-        --bg-dark-sidebar: #0f172a;
-        --bg-light-canvas: #f8fafc;
-        --border-slate: #e2e8f0;
+@code {
+    protected override void OnInitialized()
+    {
+        AuthService.OnStateChanged += SynchronizeView;
     }
 
-    .page {
-        display: flex;
-        min-height: 100vh;
-        font-family: system-ui, -apple-system, sans-serif;
-        background-color: var(--bg-light-canvas);
+    private void SynchronizeView()
+    {
+        InvokeAsync(StateHasChanged);
     }
 
-    .sidebar {
-        width: 280px;
-        background: var(--bg-dark-sidebar);
-        flex-shrink: 0;
-        box-shadow: 4px 0 20px rgba(15, 23, 42, 0.05);
-        z-index: 10;
+    public void Dispose()
+    {
+        AuthService.OnStateChanged -= SynchronizeView;
     }
-
-    .main-workspace {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-        background: var(--bg-light-canvas);
-    }
-
-    /* Elegant Clean Top Header */
-    .top-bar-panel {
-        background: #ffffff;
-        border-bottom: 1px solid var(--border-slate);
-        height: 3.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 2rem;
-        z-index: 5;
-    }
-
-    .system-breadcrumbs {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-
-    .root-node {
-        color: #94a3b8;
-    }
-
-    .node-arrow {
-        color: #cbd5e1;
-    }
-
-    .active-node {
-        color: #475569;
-    }
-
-    .server-badge {
-        background: #f0fdf4;
-        border: 1px solid #bbf7d0;
-        padding: 5px 12px;
-        border-radius: 20px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .pulse-dot {
-        width: 6px;
-        height: 6px;
-        background: #10b981;
-        border-radius: 50%;
-    }
-
-    .badge-lbl {
-        font-size: 0.68rem;
-        font-weight: 800;
-        color: #16a34a;
-    }
-
-    .content-viewport {
-        padding: 2rem;
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    body {
-        background-color: var(--bg-light-canvas) !important;
-        margin: 0;
-        padding: 0;
-    }
-</style>
+}

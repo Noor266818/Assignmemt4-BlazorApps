@@ -1,264 +1,87 @@
-﻿@using Project05_AuthState.Services
-@inject AuthenticationStateService AuthService
-@implements IDisposable
+﻿@using Microsoft.AspNetCore.Components.Routing
+@inject Project05_AuthState.Services.AuthenticationStateService AuthService
 
-<div class="top-row ps-3 navbar navbar-dark custom-nav-header">
+<div class="top-row ps-3 navbar navbar-dark" style="background-color: transparent !important;">
     <div class="container-fluid">
-        <a class="navbar-brand header-title" href="">
-            <span class="brand-gradient-icon">⚡</span>
-            <span class="brand-text">AUTH NETWORK</span>
-        </a>
+        <a class="navbar-brand-custom" href="">⚡ AUTH NETWORK</a>
     </div>
 </div>
 
 <input type="checkbox" title="Navigation menu" class="navbar-toggler" />
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').checked = false">
-    <nav class="flex-column menu-container">
-
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+    <nav class="flex-column">
         <div class="nav-item px-3">
-            <NavLink class="nav-link custom-menu-link portal-link" href="" Match="NavLinkMatch.All">
-                <span class="menu-emoji">🔐</span>
-                <span class="menu-text">Identity Portal</span>
+            <NavLink class="nav-link-custom" href="login" Match="NavLinkMatch.Prefix">
+                <span>🔑</span> Identity Portal
             </NavLink>
         </div>
 
         <div class="nav-item px-3">
-            <NavLink class="nav-link custom-menu-link profile-link" href="userprofile">
-                <span class="menu-emoji">👤</span>
-                <span class="menu-text">User Profile</span>
+            <NavLink class="nav-link-custom" href="userprofile" Match="NavLinkMatch.Prefix">
+                <span>👤</span> User Profile
             </NavLink>
         </div>
 
-        <div class="menu-divider"></div>
-
-        <div class="px-4 active-user-panel">
-            <span class="panel-label">ACTIVE SESSION DATA</span>
-            <div class="user-status-card @(AuthService.IsAuthenticated ? "session-active" : "session-idle")">
-                <div class="status-pulse-container">
-                    <span class="pulse-ring-core"></span>
-                    <span class="pulse-ring-ambient"></span>
-                </div>
-                <div class="user-meta">
-                    <p class="user-name">@(string.IsNullOrEmpty(AuthService.CurrentUser) ? "Anonymous Guest" : AuthService.CurrentUser)</p>
-                    <p class="user-role">@(AuthService.IsAuthenticated ? "Secure Root Token" : "Public Sandbox")</p>
-                </div>
+        <div style="margin: 25px 15px 10px 15px; padding: 15px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 14px;">
+            <div style="font-size: 0.75rem; font-weight: 800; color: #ff548f; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px;">
+                🎀 Active Session Data
             </div>
-        </div>
 
+            @if (AuthService.IsAuthenticated)
+            {
+                <div style="font-weight: 700; color: #ffffff; font-size: 0.95rem; word-break: break-all; display: flex; align-items: center; gap: 8px;">
+                    <span>🟢</span> @AuthService.CurrentUser
+                </div>
+                <div style="font-size: 0.7rem; color: #a5a9cc; margin-top: 4px; padding-left: 18px;">Secure Token Active</div>
+            }
+            else
+            {
+                <div style="font-weight: 700; color: #a5a9cc; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+                    <span>⚪</span> Guest User
+                </div>
+                <div style="font-size: 0.7rem; color: #6b7280; margin-top: 4px; padding-left: 18px;">Public Sandbox</div>
+            }
+        </div>
     </nav>
 </div>
 
 <style>
-    .custom-nav-header {
-        background: #0f172a !important;
-        border-bottom: 1px solid #1e293b;
-        height: 3.5rem;
-        display: flex;
-        align-items: center;
+    /* Global overrides to eliminate all default link underlines and borders */
+    .navbar-brand-custom {
+        font-weight: 800 !important;
+        letter-spacing: 0.5px !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        border: none !important;
+        outline: none !important;
     }
 
-    .header-title {
-        text-decoration: none;
-        font-weight: 800;
-        font-size: 0.95rem;
-        letter-spacing: 1px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .brand-gradient-icon {
-        font-size: 1.1rem;
-        filter: drop-shadow(0 0 8px #6366f1);
-    }
-
-    .brand-text {
-        background: linear-gradient(to right, #6366f1, #a855f7);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .menu-container {
-        padding-top: 1.5rem;
-        gap: 8px;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .custom-menu-link {
-        border-radius: 12px;
+    .nav-link-custom {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 0.6rem 1rem !important;
         color: #94a3b8 !important;
-        font-weight: 600;
-        font-size: 0.9rem;
-        padding: 12px 16px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        transition: all 0.3s ease;
-        margin-bottom: 2px;
-        text-decoration: none;
+        text-decoration: none !important; /* Removes the white line underneath */
+        font-weight: 600 !important;
+        border-radius: 8px !important;
+        border: none !important;
+        outline: none !important;
+        transition: all 0.2s ease;
     }
 
-        .custom-menu-link:hover {
-            background: rgba(30, 41, 59, 0.7);
-            color: #f8fafc !important;
-            transform: translateX(4px);
+        .nav-link-custom:hover {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            text-decoration: none !important;
         }
 
-    .portal-link.active {
-        background: linear-gradient(135deg, #4f46e5, #06b6d4) !important;
-        color: #ffffff !important;
-        font-weight: 700;
-        box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
-    }
-
-    .profile-link.active {
-        background: linear-gradient(135deg, #d946ef, #8b5cf6) !important;
-        color: #ffffff !important;
-        font-weight: 700;
-        box-shadow: 0 4px 15px rgba(217, 70, 239, 0.4);
-    }
-
-    .menu-emoji {
-        font-size: 1.1rem;
-        display: inline-block;
-        width: 22px;
-        text-align: center;
-    }
-
-    .menu-divider {
-        height: 1px;
-        background: linear-gradient(to right, rgba(30, 41, 59, 1), rgba(30, 41, 59, 0));
-        margin: 16px;
-    }
-
-    .active-user-panel {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        margin-top: auto;
-        padding-bottom: 20px;
-    }
-
-    .panel-label {
-        font-size: 0.65rem;
-        font-weight: 800;
-        color: #475569;
-        letter-spacing: 1px;
-    }
-
-    .user-status-card {
-        border-radius: 14px;
-        padding: 14px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        transition: all 0.4s ease;
-        border: 1px solid transparent;
-    }
-
-        .user-status-card.session-active {
-            background: rgba(16, 185, 129, 0.06);
-            border-color: rgba(16, 185, 129, 0.15);
+        .nav-link-custom.active {
+            color: #1e293b !important;
+            background-color: #ffffff !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
         }
-
-            .user-status-card.session-active .pulse-ring-core {
-                background: #10b981;
-            }
-
-            .user-status-card.session-active .pulse-ring-ambient {
-                border: 2px solid #10b981;
-                animation: corePulse 2s infinite ease-in-out;
-            }
-
-            .user-status-card.session-active .user-name {
-                color: #10b981;
-            }
-
-        .user-status-card.session-idle {
-            background: rgba(245, 158, 11, 0.06);
-            border-color: rgba(245, 158, 11, 0.15);
-        }
-
-            .user-status-card.session-idle .pulse-ring-core {
-                background: #f59e0b;
-            }
-
-            .user-status-card.session-idle .pulse-ring-ambient {
-                border: 2px solid #f59e0b;
-                animation: corePulse 2s infinite ease-in-out;
-            }
-
-            .user-status-card.session-idle .user-name {
-                color: #f59e0b;
-            }
-
-    .status-pulse-container {
-        position: relative;
-        width: 10px;
-        height: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-
-    .pulse-ring-core {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        position: absolute;
-        z-index: 2;
-    }
-
-    .pulse-ring-ambient {
-        width: 16px;
-        height: 16px;
-        border-radius: 50%;
-        position: absolute;
-        opacity: 0;
-        z-index: 1;
-    }
-
-    
-    @@keyframes corePulse {
-        0% {
-            transform: scale(0.6);
-            opacity: 0.8;
-        }
-
-        100% {
-            transform: scale(2.2);
-            opacity: 0;
-        }
-    }
-
-    .user-meta {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        text-align: left;
-    }
-
-    .user-name {
-        font-size: 0.8rem;
-        font-weight: 700;
-        margin: 0;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-    .user-role {
-        font-size: 0.7rem;
-        font-weight: 600;
-        color: #64748b;
-        margin: 0;
-    }
 </style>
-
-@code {
-    protected override void OnInitialized() => AuthService.OnStateChanged += StateHasChanged;
-    public void Dispose() => AuthService.OnStateChanged -= StateHasChanged;
-}
