@@ -1,37 +1,63 @@
 ﻿@inherits LayoutComponentBase
-@namespace Project06_ConfigNotify.Components.Layout
+@using Project06_ConfigNotify.Services
+@inject Project06_ConfigNotify.Services.ThemeStateManager ThemeManager
+@implements System.IDisposable
 
-<div class="fresh-master-root">
-
+<div class="fresh-master-root @ThemeManager.CurrentThemeClass">
     <div class="fresh-console-frame">
 
         <header class="fresh-header">
             <div class="brand-wrapper">
-                <span class="glowing-core-dot"></span>
-                <h1>Project06_ConfigNotify</h1>
-                <span class="fresh-status-tag">🟢 MINT DYNAMICS ACTIVE</span>
+                <div class="glowing-core-dot"></div>
+                <h1>Pipeline Configuration Hub</h1>
             </div>
-
             <div class="header-controls">
-                <div class="cyber-ssl-pill">
-                    🛡️ SECURED PORT
-                </div>
-
-                <button class="palette-toggle-btn">
-                    🌸 Reset Palette
+                <span class="cyber-ssl-pill">🔒 TLS 1.3 SECURE</span>
+                <span class="fresh-status-tag">SYSTEM ONLINE</span>
+                <button class="palette-toggle-btn" @onclick="ToggleActiveTheme">
+                    🌓 Toggle Theme Mode
                 </button>
             </div>
         </header>
 
         <div class="fresh-workspace">
-
-            <div class="fresh-sidebar">
-                <NavMenu />
-            </div>
-
+            <aside class="fresh-sidebar">
+                <Project06_ConfigNotify.Components.Layout.NavMenu />
+            </aside>
             <main class="fresh-viewport">
                 @Body
             </main>
         </div>
+
     </div>
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        ThemeManager.OnThemeStateChanged += RefreshLayoutState;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ThemeManager.LoadSavedThemeAsync();
+        }
+    }
+
+    private async Task ToggleActiveTheme()
+    {
+        await ThemeManager.ToggleThemeAsync();
+    }
+
+    private async void RefreshLayoutState()
+    {
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        ThemeManager.OnThemeStateChanged -= RefreshLayoutState;
+    }
+}

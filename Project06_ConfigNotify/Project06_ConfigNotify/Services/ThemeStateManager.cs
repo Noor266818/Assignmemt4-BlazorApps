@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 
 namespace Project06_ConfigNotify.Services
 {
@@ -27,12 +29,13 @@ namespace Project06_ConfigNotify.Services
             }
             catch
             {
-                CurrentThemeClass = "app-light-theme"; 
+                CurrentThemeClass = "app-light-theme";
             }
         }
 
         public async Task ToggleThemeAsync()
         {
+            
             CurrentThemeClass = (CurrentThemeClass == "app-light-theme") ? "app-dark-theme" : "app-light-theme";
             try
             {

@@ -1,15 +1,13 @@
-﻿
-:root {
+﻿:root {
     /* Vibrant Fresh Color Wheel */
-    --fresh-bg: linear-gradient(135deg, #fff5f7 0%, #e6fffa 100%); /* Pink to Mint Soft Gradient Background */
+    --fresh-bg: linear-gradient(135deg, #fff5f7 0%, #e6fffa 100%);
     --panel-white: rgba(255, 255, 255, 0.85);
-    --candy-pink: #ff65a3; /* Bright Pop Pink */
-    --mint-green: #059669; /* Deep Vibrant Mint Green for Text */
-    --light-mint: #d1fae5; /* Soft Light Green Pill Background */
-    --neon-cyan: #06b6d4; /* Electric Blue-Cyan Accent */
-
-    --text-dark: #1e293b; /* Deep Charcoal Text */
-    --text-muted: #64748b; /* Cool Slate Subtitles */
+    --candy-pink: #ff65a3;
+    --mint-green: #059669;
+    --light-mint: #d1fae5;
+    --neon-cyan: #06b6d4;
+    --text-dark: #1e293b;
+    --text-muted: #64748b;
     --border-smooth: rgba(255, 101, 163, 0.15);
 }
 
@@ -141,7 +139,7 @@ body, html {
 /* Left Sidebar - Deep Mint Contrast */
 .fresh-sidebar {
     width: 270px;
-    background-color: #064e3b; /* Gorgeous rich deep emerald for extreme premium setup contrast */
+    background-color: #064e3b;
     display: flex;
     flex-direction: column;
     padding: 2rem 0;

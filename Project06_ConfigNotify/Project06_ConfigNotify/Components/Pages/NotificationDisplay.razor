@@ -1,36 +1,60 @@
 ﻿@page "/notifications/display"
+@using Project06_ConfigNotify.Services
+@inject Project06_ConfigNotify.Services.NotificationService NotifyService
+@inject Project06_ConfigNotify.Services.NotificationConfig Config
+@rendermode Microsoft.AspNetCore.Components.Web.RenderMode.InteractiveServer
+@implements System.IDisposable
 
 <div class="fresh-display-card">
-    <div class="mint-pill-badge">🟢 LIVE TELEMETRY LOGS</div>
+    <div class="mint-pill-badge">🟢 LIVE TELEMETRY LOGS (@Config.NotificationStyle View)</div>
     <h2>Console Feed Stream</h2>
     <p class="board-subtext">Real-time status updates broadcasted via internal scoped events dispatcher.</p>
 
     <div class="vibrant-stream-stack">
-        <div class="stream-item-card status-mint">
-            <div class="stream-header-row">
-                <span class="stream-indicator">● Security Token Refreshed</span>
-                <span class="stream-time">Just now</span>
-            </div>
-            <p class="stream-body-text">SSL authentication tunnel renegotiated successfully with remote service core.</p>
-        </div>
-
-        <div class="stream-item-card status-cyan">
-            <div class="stream-header-row">
-                <span class="stream-indicator">● Config Instance Sync</span>
-                <span class="stream-time">4 mins ago</span>
-            </div>
-            <p class="stream-body-text">NotificationStyle state synchronized across active pipeline page nodes.</p>
-        </div>
-
-        <div class="stream-item-card status-pink">
-            <div class="stream-header-row">
-                <span class="stream-indicator">● Memory Usage Warning</span>
-                <span class="stream-time">15 mins ago</span>
-            </div>
-            <p class="stream-body-text">Scoped lifecycle context reached 78% of resource threshold allocation.</p>
-        </div>
+        @if (notifications != null)
+        {
+            @foreach (var item in notifications)
+            {
+                <div class="stream-item-card @(item.Type == "success" ? "status-mint" : item.Type == "warning" ? "status-pink" : "status-cyan")">
+                    <div class="stream-header-row">
+                        <span class="stream-indicator">● @item.Title</span>
+                        <span class="stream-time">@item.Timestamp</span>
+                    </div>
+                    @if (Config.NotificationStyle == "Detailed")
+                    {
+                        <p class="stream-body-text">@item.Message</p>
+                    }
+                </div>
+            }
+        }
     </div>
 </div>
+
+@code {
+    private List<NotificationModel>? notifications;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Config.OnConfigChanged += HandleConfigChanged;
+        await LoadNotificationsAsync();
+    }
+
+    private async Task LoadNotificationsAsync()
+    {
+        notifications = await NotifyService.GetNotificationsAsync();
+    }
+
+    private async void HandleConfigChanged()
+    {
+        await LoadNotificationsAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Config.OnConfigChanged -= HandleConfigChanged;
+    }
+}
 
 <style>
     .fresh-display-card {
@@ -75,7 +99,6 @@
             transform: translateX(4px);
         }
 
-    /* Colourful State Left-Borders and Highlights */
     .status-mint {
         border-left-color: var(--mint-green, #059669);
         background: #f0fdf4;

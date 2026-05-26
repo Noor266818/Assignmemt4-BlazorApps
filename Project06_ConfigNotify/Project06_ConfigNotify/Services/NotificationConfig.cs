@@ -1,4 +1,6 @@
-﻿namespace Project06_ConfigNotify.Services
+﻿using System;
+
+namespace Project06_ConfigNotify.Services
 {
     public class NotificationConfig
     {
@@ -6,6 +8,10 @@
         public string NotificationStyle { get; set; } = "Detailed"; // "Compact" or "Detailed"
 
         public event Action? OnConfigChanged;
-        public void NotifyChanged() => OnConfigChanged?.Invoke();
+
+        public void NotifyChanged()
+        {
+            OnConfigChanged?.Invoke();
+        }
     }
 }
