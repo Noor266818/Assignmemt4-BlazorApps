@@ -3,11 +3,11 @@
 
 <nav class="top-navbar">
     <div class="nav-left">
-        <span class="nav-title">Greeting Panel</span>
+        <span class="nav-title">🌸 Greeting Panel Studio</span>
     </div>
     <div class="nav-right">
         <span class="status-indicator">
-            <span class="pulse-dot"></span> Active Session
+            <span class="pulse-dot"></span> Active Session 💞
         </span>
     </div>
 </nav>
@@ -15,29 +15,29 @@
 <div class="main-workspace">
     <div class="aesthetic-card">
         <div class="card-header">
-            <h3>Personalized Greeting Studio</h3>
+            <h3>Personalized Greeting Studio 🎨</h3>
             <p>Select your preferred greeting style and enter your name.</p>
         </div>
 
         <div class="input-wrapper mb-4">
-            <label>GREETING TYPE</label>
+            <label>GREETING TYPE 🏷️</label>
             <div class="select-field-container">
                 <select class="custom-select" @bind="selectedGreetingType">
-                    <option value="Welcome">Standard Welcome</option>
-                    <option value="Professional">Professional Salutation</option>
-                    <option value="Casual">Casual / Friendly</option>
-                    <option value="Inspirational">Inspirational Quote</option>
+                    <option value="Welcome">Standard Welcome 🏠</option>
+                    <option value="Professional">Professional Salutation 💼</option>
+                    <option value="Casual">Casual / Friendly 👋</option>
+                    <option value="Inspirational">Inspirational Quote ✨</option>
                 </select>
             </div>
         </div>
 
         <div class="input-wrapper">
-            <label>YOUR NAME</label>
+            <label>YOUR NAME ✍️</label>
             <div class="input-field-container">
                 <input type="text" class="custom-input"
                        @bind="userName"
                        @bind:event="oninput"
-                       placeholder="Type your name here..." />
+                       placeholder="Type your beautiful name here..." />
             </div>
         </div>
 
@@ -51,7 +51,7 @@
             else
             {
                 <div class="placeholder-text">
-                    Awaiting user inputs to render greeting...
+                    Waiting for your name to sprinkle magic... 🪄✨
                 </div>
             }
         </div>
@@ -66,53 +66,51 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #170b14;
-        border-bottom: 1px solid #37142c;
+        background: #fdf2f8;
+        border-bottom: 2px solid #fbcfe8;
     }
 
     .nav-title {
-        font-size: 1rem;
-        font-weight: 600;
-        color: #ffffff;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #9d174d;
     }
 
     .status-indicator {
         display: flex;
         align-items: center;
         gap: 8px;
-        font-size: 0.75rem;
-        font-weight: 500;
-        color: #f43f5e; /* Hot Pink */
-        background: rgba(244, 63, 94, 0.08);
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: #db2777;
+        background: #fce7f3;
         padding: 6px 14px;
         border-radius: 20px;
-        border: 1px solid rgba(244, 63, 94, 0.25);
-        box-shadow: 0 0 10px rgba(244, 63, 94, 0.1);
+        border: 1px solid #f9a8d4;
     }
 
     .pulse-dot {
-        width: 6px;
-        height: 6px;
-        background: #f43f5e;
+        width: 8px;
+        height: 8px;
+        background: #e11d48;
         border-radius: 50%;
-        box-shadow: 0 0 8px #f43f5e;
         animation: pulseAnimation 2s infinite;
     }
 
+    /* Fixed Escape Keyframes compiler issue */
     @@keyframes pulseAnimation {
         0% {
-            transform: scale(0.9);
+            transform: scale(0.95);
             opacity: 0.6;
         }
 
         50% {
-            transform: scale(1.2);
+            transform: scale(1.3);
             opacity: 1;
-            box-shadow: 0 0 12px #f43f5e;
         }
 
         100% {
-            transform: scale(0.9);
+            transform: scale(0.95);
             opacity: 0.6;
         }
     }
@@ -124,69 +122,75 @@
         align-items: center;
         justify-content: start;
         flex-grow: 1;
-        padding-top: 6%;
+        padding-top: 5%;
     }
 
     /* Premium Minimal Card */
     .aesthetic-card {
         width: 100%;
         max-width: 500px;
-        background: #170b14;
-        border: 1px solid #3c1231;
-        border-radius: 16px;
+        background: #ffffff;
+        border: 2px solid #fbcfe8;
+        border-radius: 24px;
         padding: 40px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(244, 63, 94, 0.05);
+        box-shadow: 0 15px 35px rgba(219, 39, 119, 0.05);
     }
 
     .card-header h3 {
         margin: 0 0 6px 0;
-        font-size: 1.25rem;
-        font-weight: 700;
-        color: #ffffff;
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: #9d174d;
     }
 
     .card-header p {
         margin: 0 0 32px 0;
-        font-size: 0.85rem;
-        color: #a27b96; /* Dust Pink Muted Text */
+        font-size: 0.9rem;
+        color: #db2777;
+        opacity: 0.8;
     }
 
     /* Inputs Styling */
     .input-wrapper {
-        margin-bottom: 20px;
+        margin-bottom: 22px;
     }
 
         .input-wrapper label {
             display: block;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #f472b6; /* Light Pink Labels */
-            letter-spacing: 1px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #be185d;
+            letter-spacing: 0.5px;
             margin-bottom: 8px;
         }
 
     .custom-input, .custom-select {
         width: 100%;
         padding: 14px 16px;
-        background: #250f20;
-        border: 1px solid #50133e;
-        border-radius: 10px;
-        color: #ffffff;
+        background: #fdf2f8;
+        border: 2px solid #fbcfe8;
+        border-radius: 14px;
+        color: #9d174d;
         font-size: 0.95rem;
+        font-weight: 600;
         outline: none;
         transition: all 0.2s;
     }
 
-        .custom-input:focus, .custom-select:focus {
-            border-color: #f43f5e; /* Hot pink glow focus */
-            background: #1d0919;
-            box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
+        .custom-input::placeholder {
+            color: #f472b6;
         }
 
-    /* Dropdown Arrow Fix for Pink/Dark Theme */
+        .custom-input:focus, .custom-select:focus {
+            border-color: #db2777;
+            background: #ffffff;
+            box-shadow: 0 0 12px rgba(219, 39, 119, 0.15);
+        }
+
+    /* Dropdown Design */
     .custom-select {
         appearance: none;
-        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23f472b6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23db2777' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
         background-repeat: no-repeat;
         background-position: right 16px center;
         background-size: 16px;
@@ -198,41 +202,42 @@
     .output-display-box {
         margin-top: 28px;
         padding: 24px;
-        background: #250f20;
-        border: 1px dashed #50133e;
-        border-radius: 12px;
-        min-height: 100px;
+        background: #fff5f7;
+        border: 2px dashed #fbcfe8;
+        border-radius: 16px;
+        min-height: 110px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease;
     }
 
         .output-display-box.has-content {
-            background: rgba(244, 63, 94, 0.03);
-            border: 1px solid rgba(244, 63, 94, 0.3);
-            box-shadow: 0 0 15px rgba(244, 63, 94, 0.1);
+            background: #fdf2f8;
+            border: 2px solid #f9a8d4;
         }
 
     .placeholder-text {
-        color: #7c446c;
-        font-size: 0.85rem;
+        color: #f472b6;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: center;
     }
 
     .greeting-text {
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: #fce7f3;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #9d174d;
         text-align: center;
         line-height: 1.6;
     }
 
-    /* Magic Target Highlight Styling */
     .highlight {
-        color: #ffffff;
-        font-weight: 700;
-        text-shadow: 0 0 8px #f43f5e, 0 0 20px #f43f5e;
-        padding: 0 4px;
+        color: #e11d48;
+        font-weight: 800;
+        background: #ffe4e6;
+        padding: 2px 8px;
+        border-radius: 8px;
+        border: 1px solid #fecdd3;
     }
 </style>
 
@@ -246,10 +251,10 @@
 
         string message = selectedGreetingType switch
         {
-            "Professional" => $"Dear <span class='highlight'>{userName}</span>, we sincerely appreciate your presence and wish you an exceptionally productive session ahead.",
-            "Casual" => $"Hey <span class='highlight'>{userName}</span>! What's up? Awesome to see you dropping by today! 💖🍿",
-            "Inspirational" => $"Believe you can and you're halfway there, <span class='highlight'>{userName}</span>. Keep pushing forward!",
-            _ => $"Welcome back, <span class='highlight'>{userName}</span>. It's truly great to have you here in the workspace."
+            "Professional" => $"💼 Dear <span class='highlight'>{userName}</span>, we sincerely appreciate your presence and wish you an exceptionally productive and successful session ahead! 🚀✨",
+            "Casual" => $"👋 Hey <span class='highlight'>{userName}</span>! What's up? It is absolutely awesome to see you dropping by today! Let's build something cool! 🎉🍿",
+            "Inspirational" => $"✨ Believe you can and you are already halfway there, <span class='highlight'>{userName}</span>. Keep pushing forward, you got this! 🌈🏆",
+            _ => $"🏠 Welcome back, <span class='highlight'>{userName}</span>! It is truly wonderful to have you back here inside your workspace. 🌸💝"
         };
 
         return (MarkupString)message;
